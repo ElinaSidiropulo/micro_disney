@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/attraction-service" />
+    <file type="web" url="file://$PROJECT_DIR$/booking-service" />
+    <file type="web" url="file://$PROJECT_DIR$/discovery-service" />
+    <file type="web" url="file://$PROJECT_DIR$/review-service" />
+    <file type="web" url="file://$PROJECT_DIR$/schedule-service" />
+    <file type="web" url="file://$PROJECT_DIR$/ticket-service" />
+    <file type="web" url="file://$PROJECT_DIR$/user-service" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
