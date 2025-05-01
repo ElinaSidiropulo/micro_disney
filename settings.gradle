@@ -1,0 +1,2 @@
+rootProject.name = 'disney-microservices'
+include 'discovery-service', 'gateway-service', 'user-service', 'booking-service', 'attraction-service', 'ticket-service', 'review-service', 'schedule-service', 'visit-service'
