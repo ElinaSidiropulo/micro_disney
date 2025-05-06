@@ -1,5 +1,7 @@
 package com.example.schedule_service.controller;
 
+import com.example.schedule_service.dto.AttractionScheduleResponse;
+import com.example.schedule_service.dto.ScheduleDetailsDto;
 import com.example.schedule_service.entity.Schedule;
 import com.example.schedule_service.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/api/schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -58,4 +60,28 @@ public class ScheduleController {
     public boolean deleteSchedule(@PathVariable Long id) {
         return scheduleService.deleteSchedule(id);
     }
+
+    @GetMapping("/attraction/{attractionId}/details")
+    public AttractionScheduleResponse getAttractionWithSchedule(@PathVariable Long attractionId) {
+        return scheduleService.getAttractionWithSchedule(attractionId);
+    }
+
+    @GetMapping("/{id}/details")
+    public ScheduleDetailsDto getScheduleDetails(@PathVariable Long id) {
+        ScheduleDetailsDto dto = scheduleService.getScheduleWithAttraction(id);
+        if (dto == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Schedule not found");
+        }
+        return dto;
+    }
+
+    @PatchMapping("/{id}")
+    public Schedule patchSchedule(@PathVariable Long id, @RequestBody Schedule partialSchedule) {
+        Schedule patched = scheduleService.patchSchedule(id, partialSchedule);
+        if (patched == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Schedule not found");
+        }
+        return patched;
+    }
+
 }
