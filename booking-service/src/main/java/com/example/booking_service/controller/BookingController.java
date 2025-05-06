@@ -1,5 +1,6 @@
 package com.example.booking_service.controller;
 
+import com.example.booking_service.dto.BookingDetailsDto;
 import com.example.booking_service.entity.Booking;
 import com.example.booking_service.service.BookingService;
 import org.springframework.http.ResponseEntity;
@@ -62,4 +63,31 @@ public class BookingController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<BookingDetailsDto> getBookingDetails(@PathVariable Long id) {
+        return bookingService.getBookingDetailsById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Booking> partiallyUpdateBooking(@PathVariable Long id, @RequestBody Booking booking) {
+        return bookingService.getBookingById(id)
+                .map(existingBooking -> {
+                    if (booking.getStatus() != null) {
+                        existingBooking.setStatus(booking.getStatus());
+                    }
+                    if (booking.getUserId() != null) {
+                        existingBooking.setUserId(booking.getUserId());
+                    }
+                    if (booking.getAttractionId() != null) {
+                        existingBooking.setAttractionId(booking.getAttractionId());
+                    }
+                    return ResponseEntity.ok(bookingService.saveBooking(existingBooking));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.review_service.controller;
 
+import com.example.review_service.dto.ReviewDetailsDTO;
 import com.example.review_service.entity.Review;
 import com.example.review_service.service.ReviewService;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/api/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -46,8 +47,19 @@ public class ReviewController {
         return reviewService.updateReview(id, review);
     }
 
+    @PatchMapping("/{id}")
+    public Review patchReview(@PathVariable Long id, @RequestBody Review review) {
+        return reviewService.patchReview(id, review);
+    }
+
+
     @DeleteMapping("/{id}")
     public boolean deleteReview(@PathVariable Long id) {
         return reviewService.deleteReview(id);
+    }
+
+    @GetMapping("/{id}/details")
+    public ReviewDetailsDTO getReviewWithDetails(@PathVariable Long id) {
+        return reviewService.getReviewWithDetails(id);
     }
 }
