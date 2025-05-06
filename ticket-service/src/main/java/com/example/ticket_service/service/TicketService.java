@@ -1,18 +1,26 @@
 package com.example.ticket_service.service;
 
+import com.example.ticket_service.client.UserClient;
+import com.example.ticket_service.dto.TicketWithUserDTO;
+import com.example.ticket_service.dto.UserDTO;
 import com.example.ticket_service.entity.Ticket;
+import com.example.ticket_service.exception.ResourceNotFoundException;
 import com.example.ticket_service.repository.TicketRepository;
+import feign.FeignException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final UserClient userClient;
 
-    public TicketService(TicketRepository ticketRepository) {
+    public TicketService(TicketRepository ticketRepository, UserClient userClient) {
         this.ticketRepository = ticketRepository;
+        this.userClient = userClient;
     }
 
     public Ticket saveTicket(Ticket ticket) {
@@ -70,4 +78,24 @@ public class TicketService {
 
         return ticketRepository.save(existing);
     }
+
+    // Новый метод, использующий Feign клиента
+    public TicketWithUserDTO getTicketWithUser(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id " + ticketId));
+
+        UserDTO user = null;
+        try {
+            user = userClient.getUserById(ticket.getUserId());
+        } catch (FeignException.NotFound e) {
+            throw new ResourceNotFoundException("User not found with id " + ticket.getUserId());
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching user info", e);
+        }
+
+        return new TicketWithUserDTO(ticket, user);
+    }
+
+
+
 }

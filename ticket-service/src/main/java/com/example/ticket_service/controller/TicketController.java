@@ -1,5 +1,6 @@
 package com.example.ticket_service.controller;
 
+import com.example.ticket_service.dto.TicketWithUserDTO;
 import com.example.ticket_service.entity.Ticket;
 import com.example.ticket_service.service.TicketService;
 import org.springframework.http.HttpStatus;
@@ -66,4 +67,11 @@ public class TicketController {
         Ticket updated = ticketService.partialUpdateTicket(id, ticket);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/with-user/{id}")
+    public ResponseEntity<TicketWithUserDTO> getTicketWithUser(@PathVariable Long id) {
+        TicketWithUserDTO dto = ticketService.getTicketWithUser(id);
+        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+    }
+
 }

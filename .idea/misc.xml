@@ -5,10 +5,12 @@
     <file type="web" url="file://$PROJECT_DIR$/attraction-service" />
     <file type="web" url="file://$PROJECT_DIR$/booking-service" />
     <file type="web" url="file://$PROJECT_DIR$/discovery-service" />
+    <file type="web" url="file://$PROJECT_DIR$/gateway-service" />
     <file type="web" url="file://$PROJECT_DIR$/review-service" />
     <file type="web" url="file://$PROJECT_DIR$/schedule-service" />
     <file type="web" url="file://$PROJECT_DIR$/ticket-service" />
     <file type="web" url="file://$PROJECT_DIR$/user-service" />
+    <file type="web" url="file://$PROJECT_DIR$/visit-service" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
